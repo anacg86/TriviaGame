@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--Boostrap link-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/cyborg/bootstrap.min.css" rel="stylesheet" integrity="sha384-4DAPMwiyOJv/C/LvTiUsW5ueiD7EsaAhwUKO0Llp+fWzT40XrmAbayhVP00bAJVa" crossorigin="anonymous">
+    <!--Css link-->
+    <link href="assets/css/style.css">
+    
+    <!--Jquery link-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <title>Trivia</title>
+</head>
+
+<body>
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Totally Trivial Trivia!</h1>
+            <p class="lead">Answer the following questions before your time's up!</p>
+        </div>
+    </div>
+    <div class="alert alert-dismissible alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Time Remaining</strong> <a href="#" class="alert-link"> 00:00</a> seconds!
+          </div>
+
+    <h1 id="questionsText">Question 1</h1>
+    
+    
+    <ul class="list-group">
+        <li class="list-group-item">Option 1</li>
+        <li class="list-group-item">Option 2</li>
+        <li class="list-group-item">Option 3</li>
+        <li class="list-group-item">Option 4</li>
+    </ul>
+
+    <button type="button" class="btn btn-danger" id="startButton">Start</button>
+
+
+    <script src="assets/javascript/app.js"></script>
+</body>
+</html>
