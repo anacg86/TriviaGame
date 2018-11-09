@@ -1,11 +1,3 @@
-//pseudocode
-//pseudocode instructions
-//shows 1 question until user answers or time runs out
-//check 
-//if correct answer then alert(congratulations) wait a few seconds, show next question
-//if incorrect answer then  alert(wrong answer) , alert(correct answer), wait a few seconds, show next question
-//final screen shows # of correct answers, # of incorrect answers, option to restart game 
-//create a variable of current question in order to show the next question after the other
 
 //coding starts here//
 var questionIndex = 0;
@@ -34,6 +26,13 @@ class Question {
                 this.compareAnswer(listItem);
             });
         });
+        //runs timer
+        run();
+        //takes off the highlighter of the correct answer
+        $(".correct-highlight").removeClass("correct-highlight");
+        //display scores of correct and incorrect answers
+        $("#correctGuessesText").text(correctAnswers);
+        $("#incorrectGuessesText").text(incorrectAnswers);
     }
     //compares the answer to the user's guess
     compareAnswer(listItem) {
@@ -42,50 +41,75 @@ class Question {
         if (dataIndex == this.correctAnswer) {
             alert("You guessed right!");
             correctAnswers++;
-            //wait a few seconds function index 3 * 1000
-            //display next question 
-            //display(questionIndex++);
         } else {
             alert("Wrong answer");
             incorrectAnswers++;
-            //show correct answer from the new Question index3
-            //wait a few seconds
-            //display next question 
         }
-            questionIndex++;
-            //if user wins all questions, final screen shows # of correct answers, # of incorrect answers, option to restart game
-            if (questionIndex > questions.length -1) {
-                alert("Correct answers: " + correctAnswers);
-                alert("Incorrect answers: " + incorrectAnswers);
-                restartGame();
-            }
-            //displays next question from the index using index++
-            questions[questionIndex].display();
+        //highlights the correct answer from the list
+        $(".list-group-item:nth-of-type(" + (this.correctAnswer + 1) + ")").addClass("correct-highlight");
+        clearInterval(intervalId);
+        setTimeout(this.nextQuestion, 2000);
+    }
+
+    nextQuestion() {
+        seconds = 10;
+        questionIndex++;
+        //if user wins all questions, final screen shows # of correct answers, # of incorrect answers, option to restart game
+        if (questionIndex > questions.length - 1) {
+            restartGame();
+        }
+        //displays next question from the index using index++
+        questions[questionIndex].display();
     }
 }
+    //timer function
+    var seconds = 10;
+    var intervalId;
 
+    function run() {
+        clearInterval(intervalId);
+        $("#secondsLeft").html("<p>" + seconds + "</p>");
+        intervalId = setInterval(decrement, 1000);
+    };
+
+    function decrement() {
+        seconds--;
+        $("#secondsLeft").html("<p>" + seconds + "</p>");
+        if (seconds === 0) {
+           $(".list-group-item:nth-of-type(" + (questions[questionIndex].correctAnswer + 1) + ")").addClass("correct-highlight"); 
+           clearInterval(intervalId);
+            //me avisa que perdi
+            alert("Time's up!");
+            //me suma un incorrect answer
+            incorrectAnswers++;
+            setTimeout(questions[questionIndex].nextQuestion, 2000);
+        }
+    };
+    run();
 //when page loads,
-$( document ).ready(function() {
+$(document).ready(function () {
     questions[0].display();
-    
 });
 
 //this variable shows the things that go into the constructor: it has the questions related to the array of answers, the number shows the correct answer, and the last number shows the seconds 
 var questions = [];
-questions.push(new Question("Who sings Poker Face?", ["Lady Gaga", "Katy Perry", "Taylor Swift", "Bruno Mars"], 0, 20));
-questions.push(new Question("Who sings Magnets?", ["Christina Aguilera", "Michael Jackson", "King", "Lorde"], 3, 05));
-questions.push(new Question("Justin Timberlake released a song in 2006 called sexy ... what?", ["Arm", "Back", "Leg", "Butt"], 1, 05));
-questions.push(new Question("Complete the song lyrics: who says you_____________", ["you are always too small", "you're not just right", "it's always hot", "can't go home"], 3, 10));
-questions.push(new Question("Complete the song lyrics, ______ are you ok?", ["jennie", "annie", "beetlejuice", "lenny"], 1, 05));
-
+questions.push(new Question("Who sings Poker Face?", ["Lady Gaga", "Katy Perry", "Taylor Swift", "Bruno Mars"], 0));
+questions.push(new Question("Who sings Magnets?", ["Christina Aguilera", "Michael Jackson", "King", "Lorde"], 3));
+questions.push(new Question("Justin Timberlake released a song in 2006 called sexy ... what?", ["Arm", "Back", "Leg", "Butt"], 1));
+questions.push(new Question("Complete the song lyrics: who says you_____________", ["you are always too small", "you're not just right", "it's always hot", "can't go home"], 3));
+questions.push(new Question("Complete the song lyrics, ______ are you ok?", ["jennie", "annie", "beetlejuice", "lenny"], 1));
+questions.push(new Question("What song is this from: When you smile, the whole world stops and stands for while", ["chasing cars", "human", "just the way you are", "titanium"], 2));
+questions.push(new Question("Who are the two artists that sang Drop it Like it’s Hot?", ["snoop dogg and pharrell williams", "kanye and katy perry", "metalica and rage against the machine", "bruno mars and daddy yankee"], 0));
+questions.push(new Question("What song is: It started out with a kiss, how did it end up like this?", ["mercy", "jar of hearts", "mr. brightside", "pure shores"], 2));
 
 //restart game 
 function restartGame() {
     questionIndex = 0;
     correctAnswers = 0;
     incorrectAnswers = 0;
+    run();
 };
 
 
-//timer function
+
 
